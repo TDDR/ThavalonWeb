@@ -1,0 +1,47 @@
+#rulesPage {
+    padding-left: 50px;
+
+    #rulesTitle {
+        font-size: 40px;
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+
+    #rulesContent {
+        #rulesLinks {
+            background-color: #e5e5e5;
+            display: inline-block;
+            padding-right: 15px;
+            font-size: 16x;
+            border: 1px solid #000;
+
+            #linksTitle {
+                text-align: center;
+                font-weight: bold;
+                margin-top: 10px;
+                margin-bottom: -10px;
+                padding-left: 15px; // to actuall center since container #rulesLinks has padding-right of 15px
+                font-size: 18px;
+            }
+
+            ol {
+                padding-left: 20px;
+                list-style-type: none;
+            }
+            
+            li {
+                margin-top: 1px;
+            }
+
+            a {
+                color: #0645ad;
+                &:visited {
+                    color: #0b0080;
+                }
+                &:hover, &:active {
+                    color: #0645ad;
+                }
+            }
+        }
+    }
+}
