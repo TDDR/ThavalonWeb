@@ -1,7 +1,7 @@
 import React from 'react';
 import Navbar from './Navbar';
 import Home from './Home'
-import Lobbies from './Lobbies'
+import LobbyManager from './LobbyManager'
 import Rules from './Rules'
 import {
     Switch,
@@ -18,8 +18,8 @@ function App() {
 				<Route path="/" exact>
 					<Home />
 				</Route>
-				<Route path="/lobbies">
-					<Lobbies />
+				<Route path="/play">
+					<LobbyManager />
 				</Route>
 				<Route path="/rules">
 					<Rules />

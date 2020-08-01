@@ -11,7 +11,7 @@ class Navbar extends React.Component {
         return (
                 <div id="navbar" className="topnav">
                     <Link to="/" id="homeLink">Home</Link>
-                    <Link to="/lobbies" id="lobbiesLink">Lobbies</Link>
+                    <Link to="/play" id="playLink">Play</Link>
                     <Link to="/rules" id="rulesLink">Rules</Link>
                     <Link to="" className="icon" onClick={navbar_utils.openMenu}>
                         <i className="fa fa-bars"></i>
