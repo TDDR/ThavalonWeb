@@ -1,14 +1,15 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import ReactModal from 'react-modal';
 import { useForm } from 'react-hook-form';
 import "./modal.scss";
-import { register_user } from '../utils/account_utils';
+import AccountManager from '../utils/accountManager';
 
 ReactModal.setAppElement("#root");
 
 function Login() {
     const [modalIsOpen, setModalIsOpen] = useState(true);
     const {register, handleSubmit, errors} = useForm();
+
     function closeModal() {
         setModalIsOpen(false);
     }
@@ -19,9 +20,12 @@ function Login() {
         event.preventDefault();
     }
 
-    function onSubmit(data: any, event: any) {
+    async function onSubmit(data: any, event: any) {
         console.log("registering user with data: " + data);
-        register_user(data.name, data.email, data.password);
+        const accountManager = AccountManager.getInstance();
+        console.log(await accountManager.isLoggedIn());
+        await accountManager.registerUser(data.name, data.email, data.password);
+        console.log(await accountManager.isLoggedIn());
         event.preventDefault();
     }
 
@@ -44,7 +48,7 @@ function Login() {
                 {errors.name && <span className="errorMsg">Name required.</span>}
                 <br />
                 <input
-                    type="text"
+                    type="email"
                     placeholder="Email"
                     name="email"
                     ref={register({required: true, maxLength: 80, pattern: {
@@ -54,14 +58,14 @@ function Login() {
                 {errors.email && <span className="errorMsg">{errors.email.message}</span>}
                 <br />
                 <input
-                    type="text"
+                    type="password"
                     placeholder="Password"
                     name="password"
                     ref={register({required: true})} />
                 {errors.password && <span className="errorMsg">Password required.</span>}
                 <br />
                 <input
-                    type="text"
+                    type="password"
                     placeholder="Confirm Password"
                     name="confirmPassword"
                     ref={register({required: true})} />

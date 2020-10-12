@@ -3,6 +3,7 @@ import React, {useState} from 'react';
 import {NavLink} from 'react-router-dom';
 import styled from 'styled-components';
 import {faBars} from '@fortawesome/free-solid-svg-icons';
+import AccountManager from '../utils/accountManager';
 
 function openMenu(event: any) {
     let x = document.getElementById("navbar");
@@ -18,22 +19,22 @@ function openMenu(event: any) {
     event.preventDefault();
 }
 
-type NavbarProps = {
-    loggedIn: boolean
-};
+function Navbar() {
+    const accountManager = AccountManager.getInstance();
+    console.log("Re-rendering nav bar");
+    const isLoggedIn = accountManager.isLoggedIn();
 
-function Navbar(props: NavbarProps) {    
     return (
         <NavbarContainer id="navbar" className="topnav">
             <NavbarItemLeft exact to="/" activeClassName="active" id="homeLink">Home</NavbarItemLeft>
             <NavbarItemLeft to="/rules" activeClassName="active">Rules</NavbarItemLeft>
-            {!props.loggedIn &&
+            {isLoggedIn &&
                 <NavbarItemRight to="/login" activeClassName="active">Log In</NavbarItemRight>
             }
             <NavbarItemRight to="" className="icon" onClick={openMenu}>
                     <FontAwesomeIcon icon={faBars} />
             </NavbarItemRight>
-            {props.loggedIn &&
+            {!isLoggedIn &&
                 <RightSpan id="rightContainer">
                     <SubNavbarItemLeft to="/stats" className="nav-item" activeClassName="active">Stats</SubNavbarItemLeft>
                     <SubNavbarItemLeft to="/account" className="nav-item" activeClassName="active">Account</SubNavbarItemLeft>

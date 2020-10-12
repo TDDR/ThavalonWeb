@@ -1,4 +1,11 @@
 let account_logged_in = false;
+let global_jwt: string;
+
+interface JwtType {
+    "token_type": string,
+    "access_token": string,
+    "expires_at": number
+};
 
 export async function say_hello() {
     console.log("HI!");
@@ -33,20 +40,24 @@ export async function register_user(name: string, email: string, password: strin
         "displayName": name
     }
 
-    let response = await fetch("/api/add/user", {
+    let jwt: JwtType = await fetch("/api/add/user", {
         method: "POST",
         body: JSON.stringify(add_user_dict),
         headers: {
             "Content-Type": "application/json"
-        },
-        credentials: "include"
-    }).then((response) => {
-        console.log(document.cookie);
-        console.log(response);
-        for (const header of response.headers.entries()) {
-            console.log(header);
         }
-        let auth_headers = response.headers.get("authentication");
-        console.log(auth_headers);
+    }).then((response) => {
+        return response.json();
+    });
+
+    await fetch("/api/restricted_hi", {
+        method: "GET",
+        headers: {
+            "Authorization": "Basic " + jwt.access_token
+        }
+    }).then((response) => {
+        return response.text();
+    }).then((text) => {
+        console.log(text);
     });
 }

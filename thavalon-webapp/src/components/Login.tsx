@@ -2,16 +2,11 @@ import React, {useEffect, useState} from 'react';
 import ReactModal from 'react-modal';
 import { useForm } from 'react-hook-form';
 import { Link, Redirect } from 'react-router-dom';
-import { log_in, say_hello } from '../utils/account_utils';
 
 import "./modal.scss";
-type LoginProps = {
-    setLoggedIn: any
-};
-
 ReactModal.setAppElement("#root");
 
-function Login(props: LoginProps) {
+function Login() {
     const [modalIsOpen, setModalIsOpen] = useState(true);
     const {register, handleSubmit, errors} = useForm();
     function closeModal() {
@@ -30,10 +25,6 @@ function Login(props: LoginProps) {
         console.log("SUBMIT");
         console.log(data);
 
-        // try logging in, if it works update page to reflect that
-        let loggedIn = log_in();
-        useEffect(() => props.setLoggedIn(log_in()));
-
         // prevent page from reloading
         event.preventDefault();
     }
@@ -50,7 +41,7 @@ function Login(props: LoginProps) {
             <h2 className="modalHeader">Log In</h2>
             <form onSubmit={handleSubmit(OnSubmit, OnError)}>
                 <input
-                    type="text"
+                    type="email"
                     placeholder="Email"
                     name="email"
                     ref={register({required: true, maxLength: 80, pattern: {
@@ -60,7 +51,7 @@ function Login(props: LoginProps) {
                 {errors.email && <span className="errorMsg">{errors.email.message}</span>}
                 <br />
                 <input
-                    type="text"
+                    type="password"
                     placeholder="Password"
                     name="password"
                     ref={register({required: true})} />
